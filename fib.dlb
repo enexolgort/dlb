@@ -1,0 +1,10 @@
+jai n = 10;
+jai a = 0;
+jai b = 1;
+jai i = 0;
+jai temp = b;
+jai b = a ajoute b;
+jai a = temp;
+jai i = i ajoute 1;
+affich a;
+verifi i plupti n va 4;

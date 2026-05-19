@@ -1,0 +1,99 @@
+jai pointer = 0;
+jai i = 0;
+jai tape = [0];
+jai upper = 0;
+jai under = 0;
+jai depth = 0;
+
+jai program = programme '++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.';
+
+#debut_boucle
+verifi i preskplugran taille program va fin_boucle;
+jai op = program de i;
+
+verifi op egale '>' va op_right;
+verifi op egale '<' va op_left;
+verifi op egale '+' va op_inc;
+verifi op egale '-' va op_dec;
+verifi op egale '[' va op_lbracket;
+verifi op egale ']' va op_rbracket;
+verifi op egale '.' va op_print;
+
+va next;
+
+#op_print
+affich car tape de (pointer enleve under);
+va next;
+
+#op_right
+jai pointer = pointer ajoute 1;
+verifi pointer plugran upper va op_right_grow;
+va next;
+#op_right_grow
+jai upper = upper ajoute 1;
+pousse 0 dans tape;
+va next;
+
+#op_left
+jai pointer = pointer enleve 1;
+verifi pointer plupti under va op_left_grow;
+va next;
+#op_left_grow
+jai under = under enleve 1;
+tire 0 dans tape;
+va next;
+
+#op_inc
+jai tape de (pointer enleve under) = tape de (pointer enleve under) ajoute 1;
+va next;
+
+#op_dec
+jai tape de (pointer enleve under) = tape de (pointer enleve under) enleve 1;
+va next;
+
+#op_lbracket
+verifi tape de (pointer enleve under) egale 0 va lbracket_skip;
+va next;
+#lbracket_skip
+jai depth = 1;
+jai i = i ajoute 1;
+#lbracket_scan
+verifi depth egale 0 va next;
+jai op = program de i;
+verifi op egale '[' va lbracket_deeper;
+verifi op egale ']' va lbracket_shallower;
+va lbracket_advance;
+#lbracket_deeper
+jai depth = depth ajoute 1;
+va lbracket_advance;
+#lbracket_shallower
+jai depth = depth enleve 1;
+va lbracket_advance;
+#lbracket_advance
+jai i = i ajoute 1;
+va lbracket_scan;
+
+#op_rbracket
+verifi tape de (pointer enleve under) egale 0 va next;
+jai depth = 1;
+jai i = i enleve 1;
+#rbracket_scan
+verifi depth egale 0 va next;
+jai op = program de i;
+verifi op egale ']' va rbracket_deeper;
+verifi op egale '[' va rbracket_shallower;
+va rbracket_advance;
+#rbracket_deeper
+jai depth = depth ajoute 1;
+va rbracket_advance;
+#rbracket_shallower
+jai depth = depth enleve 1;
+va rbracket_advance;
+#rbracket_advance
+jai i = i enleve 1;
+va rbracket_scan;
+
+#next
+jai i = i ajoute 1;
+va debut_boucle;
+#fin_boucle
